@@ -1,0 +1,61 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>自制提供下载服务的服务器——测试页面</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="css/frame_pc.css" type="text/css" rel="stylesheet"/>
+        <script type="text/javascript" src="script/jquery-1.7.1.js"></script>
+        <script type="text/javascript" src="script/frame-pc.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                $("#txt").click(function() {
+                    location.href="books/MR_zhuang.txt";
+                });
+                
+                $("#photo").click(function() {
+                    location.href="images/desk.jpg";
+                });
+                
+                $("#music").click(function() {
+                    location.href="songs/song1.mp3";
+                });
+                
+                $("#link").click(function() {
+                    location.href="test.html";
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div>
+            <h2>服务器的资源列表如下：</h2>
+            <hr />
+            <table>
+                <tr>
+                    <td>
+                        <input type="button" id="txt" value="     文档     " class="button" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="button" id="photo" value="     图片     " class="button" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="button" id="music" value="     歌曲     " class="button" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="button" id="link" value="     链接     " class="button" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
