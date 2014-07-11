@@ -6,45 +6,45 @@ public class DownFile_Server extends Thread {
 	int m_id;
 	
 	/* ************************************************
-	 * DownFile_ServerµÄ¹¹Ôì·½·¨
-	 * ²ÎÊı£ºint id£º±êÊ¶Ïß³Ì
-	 * ¹¦ÄÜ£º´´½¨DownFile_SÏß³ÌÊµÀı
+	 * DownFile_Serverçš„æ„é€ æ–¹æ³•
+	 * å‚æ•°ï¼šint idï¼šæ ‡è¯†çº¿ç¨‹
+	 * åŠŸèƒ½ï¼šåˆ›å»ºDownFile_Sçº¿ç¨‹å®ä¾‹
 	 * ************************************************/
 	public DownFile_Server(int id) {
 		m_id= id;
 	}
 	
 	/* *********************************************************
-	 * DownFile_SÏß³ÌµÄrun³ÉÔ±·½·¨Ä£¿é
-	 * ²ÎÊı£ºÎŞ
-	 * ·µ»ØÖµ£ºvoid
-	 * ¹¦ÄÜ£ºÊµÏÖÏß³Ìrun·½·¨£¬Óë¿Í»§¶Ë½¨Á¢Á¬½Ó£¬²¢¸ù¾İ¿Í»§¶ËµÄÇëÇó·¢ËÍÊı¾İ
+	 * DownFile_Sçº¿ç¨‹çš„runæˆå‘˜æ–¹æ³•æ¨¡å—
+	 * å‚æ•°ï¼šæ— 
+	 * è¿”å›å€¼ï¼švoid
+	 * åŠŸèƒ½ï¼šå®ç°çº¿ç¨‹runæ–¹æ³•ï¼Œä¸å®¢æˆ·ç«¯å»ºç«‹è¿æ¥ï¼Œå¹¶æ ¹æ®å®¢æˆ·ç«¯çš„è¯·æ±‚å‘é€æ•°æ®
 	 * *********************************************************/
 	public void run(){
 		try{
-			/*½¨Á¢·şÎñ¶ËÌ×½Ó×Öserver£¬²¢Êä³öÁ¬½ÓËùÔÚµÄ¶Ë¿Ú*/
+			/*å»ºç«‹æœåŠ¡ç«¯å¥—æ¥å­—serverï¼Œå¹¶è¾“å‡ºè¿æ¥æ‰€åœ¨çš„ç«¯å£*/
 			ServerSocket server= new ServerSocket(8080);
 			System.out.println("Accepting connections on port "+server.getLocalPort());
 			
-            /*²»¶Ï¼àÌıÊÇ·ñÓĞ¿Í»§¶ËÇëÇóÁ¬½Ó*/
+            /*ä¸æ–­ç›‘å¬æ˜¯å¦æœ‰å®¢æˆ·ç«¯è¯·æ±‚è¿æ¥*/
             while(true){
             	Socket connection= null;
             	try{
             	   System.out.println("");
-            		System.out.print("µÈ´ı¿Í»§¶ËÁ¬½Ó...");
+            		System.out.print("ç­‰å¾…å®¢æˆ·ç«¯è¿æ¥...");
             		
-            		/*Óë¿Í»§¶Ë½¨Á¢Á¬½Ó²¢´ò¿ªÊäÈëÊä³öÁ÷*/
+            		/*ä¸å®¢æˆ·ç«¯å»ºç«‹è¿æ¥å¹¶æ‰“å¼€è¾“å…¥è¾“å‡ºæµ*/
             		connection= server.accept();
             		OutputStream out=new BufferedOutputStream(connection.getOutputStream());
                     InputStream in=new BufferedInputStream(connection.getInputStream());
                     
-                    /*²âÊÔÈÕÖ¾*/
+                    /*æµ‹è¯•æ—¥å¿—*/
                     if(connection!=null){
                     	System.out.println();
-                        System.out.println("------------------------------Óë¿Í»§¶Ë½¨Á¢Á¬½Ó£¬ÇëÇó¿ªÊ¼---------------");
+                        System.out.println("------------------------------ä¸å®¢æˆ·ç«¯å»ºç«‹è¿æ¥ï¼Œè¯·æ±‚å¼€å§‹---------------");
                     }
                     
-                    /*½ÓÊÕ´Ó¿Í»§¶Ë·¢ËÍ¹ıÀ´µÄÇëÇó±¨ÎÄ£¬²¢¶ÁÈ¡±¨ÎÄµÄÇëÇóĞĞ*/
+                    /*æ¥æ”¶ä»å®¢æˆ·ç«¯å‘é€è¿‡æ¥çš„è¯·æ±‚æŠ¥æ–‡ï¼Œå¹¶è¯»å–æŠ¥æ–‡çš„è¯·æ±‚è¡Œ*/
                     StringBuffer request=new StringBuffer();  
                     while (true) {
                         int c=in.read();
@@ -54,21 +54,21 @@ public class DownFile_Server extends Thread {
                         request.append((char)c);
                     }
                     
-                    /*µ÷ÓÃsend·½·¨Ïò¿Í»§¶Ë·¢ËÍÊı¾İ*/
+                    /*è°ƒç”¨sendæ–¹æ³•å‘å®¢æˆ·ç«¯å‘é€æ•°æ®*/
                     send(request.toString(), out);
                     
-                    /*¹Ø±ÕÊäÈëÊä³öÁ÷*/
+                    /*å…³é—­è¾“å…¥è¾“å‡ºæµ*/
                     out.close();
                     in.close();
             	}
             	catch(IOException e) {  
-                    System.err.println("Êı¾İÊäÈëÊä³öÁ÷³ö´í");
+                    System.err.println("æ•°æ®è¾“å…¥è¾“å‡ºæµå‡ºé”™");
                 }
             	finally{
                     if (connection!=null) {
-                    	   /*¹Ø±ÕÁ¬½Ó*/
+                    	   /*å…³é—­è¿æ¥*/
                         connection.close();
-                        System.out.println("------------------------------Óë¿Í»§¶Ë¶Ï¿ªÁ¬½Ó£¬ÇëÇó½áÊø---------------");
+                        System.out.println("------------------------------ä¸å®¢æˆ·ç«¯æ–­å¼€è¿æ¥ï¼Œè¯·æ±‚ç»“æŸ---------------");
                     }
                 }
             }
@@ -80,50 +80,50 @@ public class DownFile_Server extends Thread {
 	}
 	
 	/* ****************************************************
-	 * send³ÉÔ±·½·¨Ä£¿é
-	 * ²ÎÊı£ºString request£º¿Í»§¶Ë·¢À´µÄÇëÇó±¨ÎÄµÄÇëÇóĞĞ
-	 *      OutputStream out£ºÓë¿Í»§¶Ë½¨Á¢Á¬½Ó¶ø²úÉúµÄÊı¾İÊä³öÁ÷
-	 * ·µ»ØÖµ£ºvoid
-	 * ¹¦ÄÜ£º·½·¨sendÊµÏÖÏò¿Í»§¶Ë·¢ËÍÆäËùĞèµÄ×ÊÔ´
+	 * sendæˆå‘˜æ–¹æ³•æ¨¡å—
+	 * å‚æ•°ï¼šString requestï¼šå®¢æˆ·ç«¯å‘æ¥çš„è¯·æ±‚æŠ¥æ–‡çš„è¯·æ±‚è¡Œ
+	 *      OutputStream outï¼šä¸å®¢æˆ·ç«¯å»ºç«‹è¿æ¥è€Œäº§ç”Ÿçš„æ•°æ®è¾“å‡ºæµ
+	 * è¿”å›å€¼ï¼švoid
+	 * åŠŸèƒ½ï¼šæ–¹æ³•sendå®ç°å‘å®¢æˆ·ç«¯å‘é€å…¶æ‰€éœ€çš„èµ„æº
 	 * ****************************************************/
 	public void send(String request, OutputStream out) {
 		try{
-			/*ÉèÖÃ·şÎñÆ÷ÍøÕ¾µÄÄ¬ÈÏÍøÒ³*/
+			/*è®¾ç½®æœåŠ¡å™¨ç½‘ç«™çš„é»˜è®¤ç½‘é¡µ*/
 			String indexFileName="index.html";
-			/*ÉùÃ÷¸÷ÖÖÓÃµ½µÄ±äÁ¿*/
-			String method;       //ÇëÇóĞĞ·½·¨
-			String name;         //ÇëÇóµÄ×ÊÔ´Ãû
-			String MIMEType;     //ÇëÇóµÄ×ÊÔ´ÀàĞÍ
-			String version="";   //ÇëÇóµÄĞ­Òé°æ±¾
-			String header;       //·şÎñ¶Ë·¢¸ø¿Í»§¶ËµÄÏìÓ¦±¨ÎÄ(HTTPĞ­ÒéÒªÇóµÄÏìÓ¦±¨ÎÄ)
-			byte[] content;      //·şÎñ¶Ë·¢¸ø¿Í»§¶ËµÄÊı¾İÄÚÈİ
+			/*å£°æ˜å„ç§ç”¨åˆ°çš„å˜é‡*/
+			String method;       //è¯·æ±‚è¡Œæ–¹æ³•
+			String name;         //è¯·æ±‚çš„èµ„æºå
+			String MIMEType;     //è¯·æ±‚çš„èµ„æºç±»å‹
+			String version="";   //è¯·æ±‚çš„åè®®ç‰ˆæœ¬
+			String header;       //æœåŠ¡ç«¯å‘ç»™å®¢æˆ·ç«¯çš„å“åº”æŠ¥æ–‡(HTTPåè®®è¦æ±‚çš„å“åº”æŠ¥æ–‡)
+			byte[] content;      //æœåŠ¡ç«¯å‘ç»™å®¢æˆ·ç«¯çš„æ•°æ®å†…å®¹
 			
 			StringTokenizer st=new StringTokenizer(request);
 			
-			/*´ÓÇëÇó±¨ÎÄÖĞÌáÈ¡·½·¨£¬²¢¸³¸ømethod*/
+			/*ä»è¯·æ±‚æŠ¥æ–‡ä¸­æå–æ–¹æ³•ï¼Œå¹¶èµ‹ç»™method*/
 			method= st.nextToken();
 			
-         /*²âÊÔÈÕÖ¾*/
-         System.out.println("¿Í»§¶Ë·¢À´ÇëÇó±¨ÎÄµÄÇëÇóĞĞÊÇ£º"+request.toString());
+         /*æµ‹è¯•æ—¥å¿—*/
+         System.out.println("å®¢æˆ·ç«¯å‘æ¥è¯·æ±‚æŠ¥æ–‡çš„è¯·æ±‚è¡Œæ˜¯ï¼š"+request.toString());
          
-			/*ËµÃ÷·şÎñÆ÷Ö»ÄÜ´¦ÀíGET·½·¨µÄÇëÇó*/
+			/*è¯´æ˜æœåŠ¡å™¨åªèƒ½å¤„ç†GETæ–¹æ³•çš„è¯·æ±‚*/
 			if(method.compareTo("GET")==0){
-				/*´ÓÇëÇó±¨ÎÄÖĞÌáÈ¡×ÊÔ´ÎÄ¼şÃû£¬²¢¸³¸øname*/
+				/*ä»è¯·æ±‚æŠ¥æ–‡ä¸­æå–èµ„æºæ–‡ä»¶åï¼Œå¹¶èµ‹ç»™name*/
 				name= st.nextToken();
 				if (name.endsWith("/")){
 					name+= indexFileName;
 				}
 				
-				/*´ÓnameÖĞ»ñÈ¡×ÊÔ´ÀàĞÍ£¬²¢¸³¸øMIMEType*/
+				/*ä»nameä¸­è·å–èµ„æºç±»å‹ï¼Œå¹¶èµ‹ç»™MIMEType*/
 				MIMEType=guessContentTypeFromName(name);
 				
-				/*´ÓÇëÇó±¨ÎÄÖĞÌáÈ¡Ğ­Òé°æ±¾£¬²¢¸³¸øversion*/
+				/*ä»è¯·æ±‚æŠ¥æ–‡ä¸­æå–åè®®ç‰ˆæœ¬ï¼Œå¹¶èµ‹ç»™version*/
 				if(st.hasMoreTokens()){
 					version= st.nextToken();
 				}
 				
 				try{
-					/*½«±¾µØÃûÎªnameµÄÎÄ¼ş¶Áµ½content×Ö½ÚÊı×éÖĞ*/
+					/*å°†æœ¬åœ°åä¸ºnameçš„æ–‡ä»¶è¯»åˆ°contentå­—èŠ‚æ•°ç»„ä¸­*/
 					FileInputStream in= new FileInputStream(name.substring(1, name.length()));
 					ByteArrayOutputStream outBytes=new ByteArrayOutputStream();
 					int b;
@@ -133,7 +133,7 @@ public class DownFile_Server extends Thread {
 					content= outBytes.toByteArray();
 					in.close();
 					
-					/*Èç¹û¼ì²âµ½ÊÇHTTP/1.0¼°ÒÔºóµÄĞ­Òé£¬°´ÕÕ¹æ·¶£¬ĞèÒª·¢ËÍÒ»¸öMIMEÊ×²¿*/
+					/*å¦‚æœæ£€æµ‹åˆ°æ˜¯HTTP/1.0åŠä»¥åçš„åè®®ï¼ŒæŒ‰ç…§è§„èŒƒï¼Œéœ€è¦å‘é€ä¸€ä¸ªMIMEé¦–éƒ¨*/
 		            if(version.startsWith("HTTP")){
 		            	Date now=new Date();
 		            	header= "HTTP/1.0 200 OK\r\n"+
@@ -145,7 +145,7 @@ public class DownFile_Server extends Thread {
 		            }
 		            
 
-		            /*×îºó½«×ÊÔ´content·¢ËÍ¸ø¿Í»§¶Ë*/
+		            /*æœ€åå°†èµ„æºcontentå‘é€ç»™å®¢æˆ·ç«¯*/
 		            out.write(content);
 		            out.flush();
 				}
@@ -166,7 +166,7 @@ public class DownFile_Server extends Thread {
 					out.write(html.getBytes("ASCII"));
 				}
 			}
-			else{//²»ÊÇGET·½·¨Ê±£¬½øĞĞ´¦Àí
+			else{//ä¸æ˜¯GETæ–¹æ³•æ—¶ï¼Œè¿›è¡Œå¤„ç†
 				if (version.startsWith("HTTP")) {
 					Date now=new Date();
 	            	header= "HTTP/1.0 501 Not Implemented\r\n"+
@@ -183,40 +183,40 @@ public class DownFile_Server extends Thread {
             	out.write(html.getBytes("ASCII"));
 			}
 		}
-		catch (NoSuchElementException e) {//²¶×½NoSuchElementException´íÎóÀàĞÍ£¬²¢½øĞĞ´¦Àí
-		    /*Èç¹ûÖ»½¨Á¢Á¬½Ó¶ø¿Í»§¶ËÃ»ÓĞ·¢ËÍÇëÇó±¨ÎÄ£¬ÄÇÃ´¶Ï¿ªÁ¬½Ó²¢ÖØĞÂ½øĞĞÁ¬½Ó¼àÌı*/
-          System.out.println("¿Í»§¶ËÃ»ÓĞ·¢ËÍÇëÇó±¨ÎÄ");
+		catch (NoSuchElementException e) {//æ•æ‰NoSuchElementExceptioné”™è¯¯ç±»å‹ï¼Œå¹¶è¿›è¡Œå¤„ç†
+		    /*å¦‚æœåªå»ºç«‹è¿æ¥è€Œå®¢æˆ·ç«¯æ²¡æœ‰å‘é€è¯·æ±‚æŠ¥æ–‡ï¼Œé‚£ä¹ˆæ–­å¼€è¿æ¥å¹¶é‡æ–°è¿›è¡Œè¿æ¥ç›‘å¬*/
+          System.out.println("å®¢æˆ·ç«¯æ²¡æœ‰å‘é€è¯·æ±‚æŠ¥æ–‡");
 		}
 		catch (IOException e){
-			System.err.println("Êı¾İÊä³öÁ÷³ö´í");
+			System.err.println("æ•°æ®è¾“å‡ºæµå‡ºé”™");
 		}
 	}
 	
 	/* ******************************************
-	 * guessContentTypeFromName³ÉÔ±·½·¨Ä£¿é
-	 * ²ÎÊı£ºString name£º¿Í»§¶ËÇëÇóµÄ×ÊÔ´Ãû
-	 * ·µ»ØÖµ£º×ÊÔ´ÀàĞÍ(String)
-	 * ¹¦ÄÜ£ºÍ¨¹ı×ÊÔ´ÃûÈ·¶¨×ÊÔ´ÀàĞÍ
+	 * guessContentTypeFromNameæˆå‘˜æ–¹æ³•æ¨¡å—
+	 * å‚æ•°ï¼šString nameï¼šå®¢æˆ·ç«¯è¯·æ±‚çš„èµ„æºå
+	 * è¿”å›å€¼ï¼šèµ„æºç±»å‹(String)
+	 * åŠŸèƒ½ï¼šé€šè¿‡èµ„æºåç¡®å®šèµ„æºç±»å‹
 	 * ******************************************/
 	public static String guessContentTypeFromName(String name) {
-        if (name.endsWith(".html")||name.endsWith(".htm")) {//htmlÎÄµµÀàĞÍ
+        if (name.endsWith(".html")||name.endsWith(".htm")) {//htmlæ–‡æ¡£ç±»å‹
             return "text/html";
-        }else if (name.endsWith(".txt")||name.endsWith(".java")) {//txtÎÄµµÀàĞÍ
+        }else if (name.endsWith(".txt")||name.endsWith(".java")) {//txtæ–‡æ¡£ç±»å‹
             return "text/plain";
-        }else if (name.endsWith(".gif")) {//gifÍ¼Æ¬ÀàĞÍ
+        }else if (name.endsWith(".gif")) {//gifå›¾ç‰‡ç±»å‹
             return "image/gif";
-        }else if (name.endsWith(".jpg")||name.endsWith(".jpeg")) {//jpgÍ¼Æ¬ÀàĞÍ
+        }else if (name.endsWith(".jpg")||name.endsWith(".jpeg")) {//jpgå›¾ç‰‡ç±»å‹
             return "image/jpeg";
-        }else if (name.endsWith(".png")) {//pngÍ¼Æ¬ÀàĞÍ
+        }else if (name.endsWith(".png")) {//pngå›¾ç‰‡ç±»å‹
             return "image/png";
-        }else if (name.endsWith(".mp3")) {//mp3ÒôÀÖÀàĞÍ
+        }else if (name.endsWith(".mp3")) {//mp3éŸ³ä¹ç±»å‹
             return "audio/x-mpeg";
         }
-        else if (name.endsWith(".css")) {//cssÍøÒ³¿ò¼ÜÀàĞÍ
+        else if (name.endsWith(".css")) {//cssç½‘é¡µæ¡†æ¶ç±»å‹
             return "text/css";
-        }else if(name.endsWith(".js")) {//js½Å±¾ÓïÑÔÀàĞÍ
+        }else if(name.endsWith(".js")) {//jsè„šæœ¬è¯­è¨€ç±»å‹
             return "text/javascript";
-        }else if (name.endsWith(".class")) {//class×Ö½ÚÂëÎÄ¼şÀàĞÍ
+        }else if (name.endsWith(".class")) {//classå­—èŠ‚ç æ–‡ä»¶ç±»å‹
             return "application/octet-stream";
         }else {
             return "text/plain";
@@ -224,10 +224,10 @@ public class DownFile_Server extends Thread {
 	}
 	
 	/* ***************************
-	 * mainº¯ÊıÈë¿ÚÄ£¿é
-	 * ²ÎÊı£ºString args[]
-	 * ·µ»ØÖµ£ºvoid
-	 * ¹¦ÄÜ£º´´½¨·şÎñÆ÷Ïß³Ì
+	 * mainå‡½æ•°å…¥å£æ¨¡å—
+	 * å‚æ•°ï¼šString args[]
+	 * è¿”å›å€¼ï¼švoid
+	 * åŠŸèƒ½ï¼šåˆ›å»ºæœåŠ¡å™¨çº¿ç¨‹
 	 * ***************************/
 	public static void main(String args[]){
 		DownFile_Server serverThread= new DownFile_Server(1);
