@@ -1,5 +1,0 @@
-DownFile_Server±à³Ì¼ÇÂ¼£º
-
-System.out.println("Data to be sent:");  
-            System.out.write(this.content);
-
